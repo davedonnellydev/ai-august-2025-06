@@ -1,15 +1,13 @@
-# Project [00] #AIAugustAppADay: [Project name]
+# Project 06 #AIAugustAppADay: Python Day! Keyword Extractor API
 
-![Last Commit](https://img.shields.io/github/last-commit/davedonnellydev/flask-python-starter)  
+![Last Commit](https://img.shields.io/github/last-commit/davedonnellydev/ai-august-2025-06)  
 
-**📆 Date**: *[Project build date here]*  
-**🎯 Project Objective**: *[Write up any project objectives here]*  
-**🚀 Features**: *[Main features for MVP]*  
-**🛠️ Tech used**: *[Main tech used, including links to libraries/APIs]*  
+**📆 Date**: 08/Aug/2025  
+**🎯 Project Objective**: Create an API endpoint that you can send text to, and get back main keywords (great for SEO, tagging, etc.)  
+**🚀 Features**: Endpoints: /keywords (POST text); Returns: JSON: { "keywords": [...] }  
+**🛠️ Tech used**: Python, Flask, OpenAI API  
 **▶️ Live Demo**: *[https://your-demo-url.com](https://your-demo-url.com)*  
 *(Link will be added after deployment)*  
-
-**🏁 Starter repo**: [Flask Python starter](https://github.com/davedonnellydev/flask-python-starter)  
 
 ## 🗒️ Summary
 **Lessons learned**  
@@ -26,7 +24,7 @@ This project has been built as part of my AI August App-A-Day Challenge. You can
 
 ## 🧪 Testing
 
-![CI](https://github.com/davedonnellydev/flask-python-starter/actions/workflows/ci.yml/badge.svg) *[Link should be amended so that correct repo is specified]*  
+![CI](https://github.com/davedonnellydev/ai-august-2025-06/actions/workflows/ci.yml/badge.svg)  
 *Note: Test suite runs automatically with each push/merge.*  
 
 ## Quick Start
@@ -157,5 +155,5 @@ pytest
 
 
 ## 📜 License
-![GitHub License](https://img.shields.io/github/license/davedonnellydev/flask-python-starter)  
+![GitHub License](https://img.shields.io/github/license/davedonnellydev/ai-august-2025-06)  
 This project is licensed under the MIT License.  
