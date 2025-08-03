@@ -1,0 +1,64 @@
+name: Run Python Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create test environment file
+        run: |
+          # Create .env file with test configuration
+          echo "SECRET_KEY=test-secret-key-for-ci" > .env
+          echo "FLASK_ENV=testing" >> .env
+          echo "LOG_LEVEL=DEBUG" >> .env
+
+      - name: Test application startup
+        env:
+          SECRET_KEY: test-secret-key-for-ci
+          FLASK_ENV: testing
+          LOG_LEVEL: DEBUG
+        run: python -c "from app import create_app; app = create_app('testing'); print('App created successfully')"
+
+      - name: Run lint
+        env:
+          SECRET_KEY: test-secret-key-for-ci
+          FLASK_ENV: testing
+        run: flake8 app tests
+
+      - name: Run format check
+        env:
+          SECRET_KEY: test-secret-key-for-ci
+          FLASK_ENV: testing
+        run: black --check .
+
+      - name: Run tests
+        env:
+          SECRET_KEY: test-secret-key-for-ci
+          FLASK_ENV: testing
+          LOG_LEVEL: DEBUG
+        run: pytest --cov=app --cov-report=xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false

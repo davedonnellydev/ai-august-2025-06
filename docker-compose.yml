@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - FLASK_ENV=development
+      - SECRET_KEY=dev-secret-key
+      - LOG_LEVEL=DEBUG
+    volumes:
+      - .:/app
+    command: python app/main.py
+
+  web-prod:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=${SECRET_KEY}
+      - LOG_LEVEL=WARNING
+    profiles:
+      - production

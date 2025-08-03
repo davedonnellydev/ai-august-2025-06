@@ -1,0 +1,49 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+.Python
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Flask instance folder (if used)
+instance/
+
+# Test & coverage
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+htmlcov/
+
+# Flask-Migrate migrations (if used)
+migrations/
+
+# OS / Editor / IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+
+# pipenv, poetry, mypy, etc.
+Pipfile.lock
+poetry.lock
+.mypy_cache/
+.dmypy.json
+.pyre/
