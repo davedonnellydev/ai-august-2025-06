@@ -24,10 +24,12 @@ def register_error_handlers(app):
     def too_many_requests(error):
         logger.warning(f"Rate limit exceeded: {error}")
         return (
-            jsonify({
-                "error": "Rate limit exceeded",
-                "message": "Too many requests. Please try again later."
-            }),
+            jsonify(
+                {
+                    "error": "Rate limit exceeded",
+                    "message": "Too many requests. Please try again later.",
+                }
+            ),
             429,
         )
 

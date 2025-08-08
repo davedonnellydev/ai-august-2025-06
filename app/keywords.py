@@ -18,7 +18,8 @@ def get_openai_client():
 @keywords_bp.route("/keywords", methods=["POST"])
 @limiter.limit("10 per hour")
 def keywords():
-    # Accept either JSON payload {"text": "..."} / {"content": "..."} or raw text body
+    # Accept either JSON payload {"text": "..."} / {"content": "..."}
+    # or raw text body
     posted_text = None
     if request.is_json:
         data = request.get_json(silent=True) or {}
@@ -27,19 +28,24 @@ def keywords():
         posted_text = request.get_data(as_text=True)
 
     if not posted_text or not posted_text.strip():
-        return jsonify({"error": "No text provided. Send raw text or JSON with 'text' or 'content'."}), 400
+        error_msg = "No text provided. Send raw text or JSON with 'text' or 'content'."
+        return jsonify({"error": error_msg}), 400
 
     class KeywordArray(BaseModel):
         keywords: list[str]
 
     try:
         client = get_openai_client()
+        system_content = (
+            "Analyze the text and extract the best keywords to use for "
+            "search engine optimization (SEO)"
+        )
         response = client.responses.parse(
             model="gpt-5-nano",
             input=[
                 {
                     "role": "system",
-                    "content": "Analyze the text and extract the best keywords to use for search engine optimization (SEO)",
+                    "content": system_content,
                 },
                 {"role": "user", "content": posted_text},
             ],

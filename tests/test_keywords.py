@@ -1,6 +1,4 @@
-import pytest
 from unittest.mock import patch, MagicMock
-from app.limiter import limiter
 
 
 class TestKeywordsEndpoint:
@@ -14,11 +12,7 @@ class TestKeywordsEndpoint:
 
     def test_keywords_missing_text_json(self, client):
         """Test keywords endpoint with missing text in JSON"""
-        response = client.post(
-            "/keywords",
-            json={},
-            content_type="application/json"
-        )
+        response = client.post("/keywords", json={}, content_type="application/json")
         assert response.status_code == 400
         data = response.get_json()
         assert "error" in data
@@ -26,11 +20,7 @@ class TestKeywordsEndpoint:
 
     def test_keywords_missing_text_raw(self, client):
         """Test keywords endpoint with missing text in raw body"""
-        response = client.post(
-            "/keywords",
-            data="",
-            content_type="text/plain"
-        )
+        response = client.post("/keywords", data="", content_type="text/plain")
         assert response.status_code == 400
         data = response.get_json()
         assert "error" in data
@@ -38,7 +28,7 @@ class TestKeywordsEndpoint:
 
     def test_keywords_with_text_json(self, client):
         """Test keywords endpoint with text in JSON format"""
-        with patch('app.keywords.get_openai_client') as mock_get_client:
+        with patch("app.keywords.get_openai_client") as mock_get_client:
             # Mock the OpenAI client and response
             mock_client = MagicMock()
             mock_response = MagicMock()
@@ -50,7 +40,7 @@ class TestKeywordsEndpoint:
             response = client.post(
                 "/keywords",
                 json={"text": "This is a test example"},
-                content_type="application/json"
+                content_type="application/json",
             )
 
             assert response.status_code == 200
@@ -60,7 +50,7 @@ class TestKeywordsEndpoint:
 
     def test_keywords_with_content_json(self, client):
         """Test keywords endpoint with 'content' field in JSON"""
-        with patch('app.keywords.get_openai_client') as mock_get_client:
+        with patch("app.keywords.get_openai_client") as mock_get_client:
             mock_client = MagicMock()
             mock_response = MagicMock()
             mock_response.output_parsed = MagicMock()
@@ -71,7 +61,7 @@ class TestKeywordsEndpoint:
             response = client.post(
                 "/keywords",
                 json={"content": "This is content for testing"},
-                content_type="application/json"
+                content_type="application/json",
             )
 
             assert response.status_code == 200
@@ -80,7 +70,7 @@ class TestKeywordsEndpoint:
 
     def test_keywords_with_raw_text(self, client):
         """Test keywords endpoint with raw text body"""
-        with patch('app.keywords.get_openai_client') as mock_get_client:
+        with patch("app.keywords.get_openai_client") as mock_get_client:
             mock_client = MagicMock()
             mock_response = MagicMock()
             mock_response.output_parsed = MagicMock()
@@ -89,9 +79,7 @@ class TestKeywordsEndpoint:
             mock_get_client.return_value = mock_client
 
             response = client.post(
-                "/keywords",
-                data="This is raw text content",
-                content_type="text/plain"
+                "/keywords", data="This is raw text content", content_type="text/plain"
             )
 
             assert response.status_code == 200
@@ -100,13 +88,13 @@ class TestKeywordsEndpoint:
 
     def test_keywords_missing_api_key(self, client):
         """Test keywords endpoint when OPENAI_API_KEY is missing"""
-        with patch('app.keywords.get_openai_client') as mock_get_client:
-            mock_get_client.side_effect = ValueError("OPENAI_API_KEY environment variable is required")
+        with patch("app.keywords.get_openai_client") as mock_get_client:
+            mock_get_client.side_effect = ValueError(
+                "OPENAI_API_KEY environment variable is required"
+            )
 
             response = client.post(
-                "/keywords",
-                json={"text": "Test text"},
-                content_type="application/json"
+                "/keywords", json={"text": "Test text"}, content_type="application/json"
             )
 
             assert response.status_code == 500
@@ -116,15 +104,13 @@ class TestKeywordsEndpoint:
 
     def test_keywords_openai_error(self, client):
         """Test keywords endpoint when OpenAI API fails"""
-        with patch('app.keywords.get_openai_client') as mock_get_client:
+        with patch("app.keywords.get_openai_client") as mock_get_client:
             mock_client = MagicMock()
             mock_client.responses.parse.side_effect = Exception("OpenAI API error")
             mock_get_client.return_value = mock_client
 
             response = client.post(
-                "/keywords",
-                json={"text": "Test text"},
-                content_type="application/json"
+                "/keywords", json={"text": "Test text"}, content_type="application/json"
             )
 
             assert response.status_code == 500
@@ -135,9 +121,7 @@ class TestKeywordsEndpoint:
     def test_keywords_whitespace_only(self, client):
         """Test keywords endpoint with whitespace-only text"""
         response = client.post(
-            "/keywords",
-            json={"text": "   \n\t   "},
-            content_type="application/json"
+            "/keywords", json={"text": "   \n\t   "}, content_type="application/json"
         )
         assert response.status_code == 400
         data = response.get_json()
@@ -188,7 +172,7 @@ class TestErrorHandlers:
 
     def test_500_error_handler(self, client):
         """Test 500 error handler returns JSON"""
-        with patch('app.keywords.get_openai_client') as mock_get_client:
+        with patch("app.keywords.get_openai_client") as mock_get_client:
             mock_get_client.side_effect = Exception("Test error")
 
             response = client.post("/keywords", json={"text": "test"})
