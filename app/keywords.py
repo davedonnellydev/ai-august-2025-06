@@ -28,9 +28,7 @@ def keywords():
         posted_text = request.get_data(as_text=True)
 
     if not posted_text or not posted_text.strip():
-        error_msg = (
-            "No text provided. Send raw text or JSON with 'text' or 'content'."
-        )
+        error_msg = "No text provided. Send raw text or JSON with 'text' or 'content'."
         return jsonify({"error": error_msg}), 400
 
     class KeywordArray(BaseModel):
