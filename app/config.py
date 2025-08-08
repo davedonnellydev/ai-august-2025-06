@@ -14,6 +14,7 @@ class Config:
     DEBUG = False
     TESTING = False
     LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+    API_KEY = os.environ.get("API_KEY") or "dev-api-key-change-in-production"
 
 
 # Dev environment config w verbose logging

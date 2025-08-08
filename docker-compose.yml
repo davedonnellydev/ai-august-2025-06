@@ -10,6 +10,7 @@ services:
     environment:
       - FLASK_ENV=development
       - FLASK_APP=run.py
+      - API_KEY=dev-api-key-change-in-production
       - LOG_LEVEL=DEBUG
     volumes:
       - .:/app
@@ -23,6 +24,7 @@ services:
       - .env.local
     environment:
       - FLASK_ENV=production
+      - API_KEY=${API_KEY}
       - LOG_LEVEL=WARNING
     profiles:
       - production

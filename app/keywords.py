@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from app.limiter import limiter
+from app.auth import require_bearer_token
 from openai import OpenAI
 from pydantic import BaseModel
 import os
@@ -16,6 +17,7 @@ def get_openai_client():
 
 
 @keywords_bp.route("/keywords", methods=["POST"])
+@require_bearer_token
 @limiter.limit("10 per hour")
 def keywords():
     # Accept either JSON payload {"text": "..."} / {"content": "..."}
