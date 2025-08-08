@@ -10,7 +10,26 @@
 
 Above is just a landing page. The API should be called as a POST request to `/keywords`. As the API has bearer token authentication, you will need the correct token if you'd like to try it - email me for details at [davepauldonnelly@gmail.com](mailto:davepauldonnelly@gmail.com).  
 
+# Project 06
 ## 🗒️ Summary
+
+Python Day! This project was a great excuse to dust off my Python skills, though I spent a fair chunk of the day re-learning the mechanics and architecture of a Flask app. It’s been a few years since I last built one, so I found myself doing a lot of reading and firing questions into Cursor to refresh my memory on why Flask apps are structured the way they are.  
+
+The project itself was simple: an API endpoint that accepts a `POST` request with text in the request body, sends that text to OpenAI’s Responses API, and returns a structured output — a string of keywords extracted for SEO purposes. Most of the core implementation came together quickly thanks to patterns I’ve been using all week, but the real time sink was revisiting some of those backend fundamentals, remembering how Python syntax works and the importance of API security/authentication.  
+
+Along the way, I dusted off my Postman skills for testing the endpoint, used Render.com to host the Flask app, and experimented with Docker for the first time. Docker was a bit of a challenge — especially figuring out how to make changes and see them reflected in my dev environment — I'm keen to keep exploring it's uses!  
+
+**Lessons learned**  
+- Revisiting old skills takes time — be ready to slow down and re-learn the fundamentals before diving into code.  
+- Postman remains a fantastic tool for quickly testing and iterating on API endpoints.  
+
+**Final thoughts**  
+While this wasn’t the most complex project of the challenge, it was a valuable refresher on Python, Flask and Postman, and a great opportunity to expand my toolset with Docker and Render.com.  
+
+This project has been built as part of my AI August App-A-Day Challenge. You can read more information on the full project here: [https://github.com/davedonnellydev/ai-august-2025-challenge](https://github.com/davedonnellydev/ai-august-2025-challenge).  
+
+
+
 
 
 
