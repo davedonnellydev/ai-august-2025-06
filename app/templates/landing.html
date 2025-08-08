@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Extractor API - AI August Challenge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="challenge-badge">AI August App-A-Day Challenge</div>
+        <h1>🔍 Keyword Extractor API</h1>
+        <p class="subtitle">Extract SEO keywords from any text using AI</p>
+
+        <div class="description">
+            <p>This API was built as part of the <strong>AI August App-A-Day Challenge</strong> - a personal challenge to build one AI-powered application every day in August 2025.</p>
+        </div>
+
+        <div class="features">
+            <h3>Features</h3>
+            <ul>
+                <li><strong>AI-Powered:</strong> Uses OpenAI's GPT models for intelligent keyword extraction</li>
+                <li><strong>Secure:</strong> Bearer token authentication to protect your API</li>
+                <li><strong>Rate Limited:</strong> Built-in protection against abuse</li>
+                <li><strong>Flexible Input:</strong> Accepts JSON or raw text</li>
+                <li><strong>Production Ready:</strong> Comprehensive testing and error handling</li>
+            </ul>
+        </div>
+
+        <div class="api-endpoint">
+            <strong>API Endpoint:</strong> POST /keywords<br>
+            <strong>Authentication:</strong> Bearer token required<br>
+            <strong>Rate Limit:</strong> 10 requests per hour
+        </div>
+
+        <a href="https://github.com/davedonnellydev/ai-august-2025-06" class="github-link" target="_blank">
+            📁 View on GitHub
+        </a>
+
+        <p class="footer">
+            Built using Python, Flask, and OpenAI API
+        </p>
+    </div>
+</body>
+</html>
