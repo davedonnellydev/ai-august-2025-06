@@ -1,6 +1,7 @@
 import logging
 from flask import Flask
 from flask_talisman import Talisman
+from app.limiter import limiter
 from app.proxy import proxy_bp
 from app.health import health_bp
 from app.main import main_bp
@@ -19,6 +20,9 @@ def create_app(config_name="default"):
         level=getattr(logging, app.config["LOG_LEVEL"]),
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
+
+    # Initialize rate limiting with the app
+    limiter.init_app(app)
 
     # Setup security headers (only in production)
     if config_name == "production":

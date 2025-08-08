@@ -1,12 +1,22 @@
 from flask import Blueprint, jsonify, request
+from app.limiter import limiter
 from openai import OpenAI
 from pydantic import BaseModel
+import os
 
 keywords_bp = Blueprint("keywords", __name__)
 
-client = OpenAI()
+
+def get_openai_client():
+    """Get OpenAI client with API key from environment"""
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY environment variable is required")
+    return OpenAI(api_key=api_key)
+
 
 @keywords_bp.route("/keywords", methods=["POST"])
+@limiter.limit("10 per hour")
 def keywords():
     # Accept either JSON payload {"text": "..."} / {"content": "..."} or raw text body
     posted_text = None
@@ -23,6 +33,7 @@ def keywords():
         keywords: list[str]
 
     try:
+        client = get_openai_client()
         response = client.responses.parse(
             model="gpt-5-nano",
             input=[
@@ -37,5 +48,7 @@ def keywords():
         parsed = response.output_parsed
         # Ensure JSON serializable
         return jsonify(parsed.model_dump() if hasattr(parsed, "model_dump") else parsed), 200
+    except ValueError as e:
+        return jsonify({"error": "Configuration error", "message": str(e)}), 500
     except Exception as exc:  # pragma: no cover
         return jsonify({"error": "Failed to extract keywords", "message": str(exc)}), 500

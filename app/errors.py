@@ -20,6 +20,17 @@ def register_error_handlers(app):
             404,
         )
 
+    @app.errorhandler(429)
+    def too_many_requests(error):
+        logger.warning(f"Rate limit exceeded: {error}")
+        return (
+            jsonify({
+                "error": "Rate limit exceeded",
+                "message": "Too many requests. Please try again later."
+            }),
+            429,
+        )
+
     @app.errorhandler(500)
     def internal_error(error):
         logger.error(f"Internal server error: {error}")

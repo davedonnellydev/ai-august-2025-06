@@ -9,3 +9,4 @@ flask-talisman
 gunicorn
 openai
 pydantic
+Flask-Limiter
