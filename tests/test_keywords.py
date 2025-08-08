@@ -7,12 +7,17 @@ class TestKeywordsEndpoint:
     def test_keywords_endpoint_exists(self, client):
         """Test that the /keywords endpoint is accessible"""
         response = client.post("/keywords")
-        # Should not be 404, but might be 400 for missing data
-        assert response.status_code != 404
+        # Should be 401 due to missing auth, not 404
+        assert response.status_code == 401
 
     def test_keywords_missing_text_json(self, client):
         """Test keywords endpoint with missing text in JSON"""
-        response = client.post("/keywords", json={}, content_type="application/json")
+        response = client.post(
+            "/keywords",
+            json={},
+            content_type="application/json",
+            headers={"Authorization": "Bearer dev-api-key-change-in-production"},
+        )
         assert response.status_code == 400
         data = response.get_json()
         assert "error" in data
@@ -20,7 +25,12 @@ class TestKeywordsEndpoint:
 
     def test_keywords_missing_text_raw(self, client):
         """Test keywords endpoint with missing text in raw body"""
-        response = client.post("/keywords", data="", content_type="text/plain")
+        response = client.post(
+            "/keywords",
+            data="",
+            content_type="text/plain",
+            headers={"Authorization": "Bearer dev-api-key-change-in-production"},
+        )
         assert response.status_code == 400
         data = response.get_json()
         assert "error" in data
@@ -41,6 +51,7 @@ class TestKeywordsEndpoint:
                 "/keywords",
                 json={"text": "This is a test example"},
                 content_type="application/json",
+                headers={"Authorization": "Bearer dev-api-key-change-in-production"},
             )
 
             assert response.status_code == 200
@@ -62,6 +73,7 @@ class TestKeywordsEndpoint:
                 "/keywords",
                 json={"content": "This is content for testing"},
                 content_type="application/json",
+                headers={"Authorization": "Bearer dev-api-key-change-in-production"},
             )
 
             assert response.status_code == 200
@@ -79,7 +91,10 @@ class TestKeywordsEndpoint:
             mock_get_client.return_value = mock_client
 
             response = client.post(
-                "/keywords", data="This is raw text content", content_type="text/plain"
+                "/keywords",
+                data="This is raw text content",
+                content_type="text/plain",
+                headers={"Authorization": "Bearer dev-api-key-change-in-production"},
             )
 
             assert response.status_code == 200
@@ -94,7 +109,10 @@ class TestKeywordsEndpoint:
             )
 
             response = client.post(
-                "/keywords", json={"text": "Test text"}, content_type="application/json"
+                "/keywords",
+                json={"text": "Test text"},
+                content_type="application/json",
+                headers={"Authorization": "Bearer dev-api-key-change-in-production"},
             )
 
             assert response.status_code == 500
@@ -110,7 +128,10 @@ class TestKeywordsEndpoint:
             mock_get_client.return_value = mock_client
 
             response = client.post(
-                "/keywords", json={"text": "Test text"}, content_type="application/json"
+                "/keywords",
+                json={"text": "Test text"},
+                content_type="application/json",
+                headers={"Authorization": "Bearer dev-api-key-change-in-production"},
             )
 
             assert response.status_code == 500
@@ -121,7 +142,10 @@ class TestKeywordsEndpoint:
     def test_keywords_whitespace_only(self, client):
         """Test keywords endpoint with whitespace-only text"""
         response = client.post(
-            "/keywords", json={"text": "   \n\t   "}, content_type="application/json"
+            "/keywords",
+            json={"text": "   \n\t   "},
+            content_type="application/json",
+            headers={"Authorization": "Bearer dev-api-key-change-in-production"},
         )
         assert response.status_code == 400
         data = response.get_json()
@@ -133,7 +157,11 @@ class TestRateLimiting:
 
     def test_rate_limit_headers(self, client):
         """Test that rate limit headers are present"""
-        response = client.post("/keywords", json={"text": "test"})
+        response = client.post(
+            "/keywords",
+            json={"text": "test"},
+            headers={"Authorization": "Bearer dev-api-key-change-in-production"},
+        )
         # Rate limit headers should be present (even if not enforced in tests)
         assert "X-RateLimit" in response.headers or response.status_code in [200, 400, 500]
 
@@ -141,7 +169,11 @@ class TestRateLimiting:
         """Test that rate limiting decorator is applied to the endpoint"""
         # This test verifies the decorator is present without testing actual rate limiting
         # which can be flaky in test environments
-        response = client.post("/keywords", json={"text": "test"})
+        response = client.post(
+            "/keywords",
+            json={"text": "test"},
+            headers={"Authorization": "Bearer dev-api-key-change-in-production"},
+        )
         # Should get a response (not 404) indicating the endpoint exists with decorator
         assert response.status_code in [200, 400, 500]
 
@@ -165,7 +197,11 @@ class TestErrorHandlers:
 
     def test_400_error_handler(self, client):
         """Test 400 error handler returns JSON"""
-        response = client.post("/keywords", json={"invalid": "data"})
+        response = client.post(
+            "/keywords",
+            json={"invalid": "data"},
+            headers={"Authorization": "Bearer dev-api-key-change-in-production"},
+        )
         assert response.status_code == 400
         data = response.get_json()
         assert "error" in data
@@ -175,7 +211,11 @@ class TestErrorHandlers:
         with patch("app.keywords.get_openai_client") as mock_get_client:
             mock_get_client.side_effect = Exception("Test error")
 
-            response = client.post("/keywords", json={"text": "test"})
+            response = client.post(
+                "/keywords",
+                json={"text": "test"},
+                headers={"Authorization": "Bearer dev-api-key-change-in-production"},
+            )
             assert response.status_code == 500
             data = response.get_json()
             assert "error" in data

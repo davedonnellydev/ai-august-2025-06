@@ -25,6 +25,10 @@ class TestLimiterConfiguration:
     def test_limiter_decorator_functionality(self, client):
         """Test that rate limiting decorator is functional"""
         # Test that the endpoint exists and responds (indicating decorator is applied)
-        response = client.post("/keywords", json={"text": "test"})
+        response = client.post(
+            "/keywords",
+            json={"text": "test"},
+            headers={"Authorization": "Bearer dev-api-key-change-in-production"},
+        )
         # Should not be 404, indicating the endpoint with decorator exists
         assert response.status_code != 404
