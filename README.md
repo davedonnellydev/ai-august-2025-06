@@ -10,7 +10,6 @@
 
 Above is just a landing page. The API should be called as a POST request to `/keywords`. As the API has bearer token authentication, you will need the correct token if you'd like to try it - email me for details at [davepauldonnelly@gmail.com](mailto:davepauldonnelly@gmail.com).  
 
-# Project 06
 ## 🗒️ Summary
 
 Python Day! This project was a great excuse to dust off my Python skills, though I spent a fair chunk of the day re-learning the mechanics and architecture of a Flask app. It’s been a few years since I last built one, so I found myself doing a lot of reading and firing questions into Cursor to refresh my memory on why Flask apps are structured the way they are.  
