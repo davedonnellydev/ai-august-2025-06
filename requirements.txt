@@ -6,3 +6,6 @@ pytest-cov
 flake8
 black
 flask-talisman
+gunicorn
+openai
+pydantic

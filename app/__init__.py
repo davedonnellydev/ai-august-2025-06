@@ -4,6 +4,7 @@ from flask_talisman import Talisman
 from app.proxy import proxy_bp
 from app.health import health_bp
 from app.main import main_bp
+from app.keywords import keywords_bp
 from app.config import config
 
 
@@ -29,6 +30,7 @@ def create_app(config_name="default"):
     app.register_blueprint(main_bp)
     app.register_blueprint(proxy_bp)
     app.register_blueprint(health_bp)
+    app.register_blueprint(keywords_bp)
 
     # Register error handlers
     from app.errors import register_error_handlers
