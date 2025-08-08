@@ -1,4 +1,3 @@
-import pytest
 from app.limiter import limiter
 
 
@@ -8,11 +7,11 @@ class TestLimiterConfiguration:
     def test_limiter_instance_created(self):
         """Test that limiter instance is properly created"""
         assert limiter is not None
-        assert hasattr(limiter, 'init_app')
+        assert hasattr(limiter, "init_app")
 
     def test_limiter_storage_configured(self):
         """Test that storage is configured"""
-        assert hasattr(limiter, 'storage')
+        assert hasattr(limiter, "storage")
         assert limiter.storage is not None
 
     def test_limiter_with_app_context(self, app):
