@@ -26,23 +26,6 @@ Along the way, I dusted off my Postman skills for testing the endpoint, used Ren
 **Final thoughts**  
 While this wasn’t the most complex project of the challenge, it was a valuable refresher on Python, Flask and Postman, and a great opportunity to expand my toolset with Docker and Render.com.  
 
-This project has been built as part of my AI August App-A-Day Challenge. You can read more information on the full project here: [https://github.com/davedonnellydev/ai-august-2025-challenge](https://github.com/davedonnellydev/ai-august-2025-challenge).  
-
-
-
-
-
-
-**Lessons learned**
-*A little summary of learnings*
-
-**Blockers**
-*Note any blockers here*
-
-**Final thoughts**
-*Any final thoughts here*
-
-
 This project has been built as part of my AI August App-A-Day Challenge. You can read more information on the full project here: [https://github.com/davedonnellydev/ai-august-2025-challenge](https://github.com/davedonnellydev/ai-august-2025-challenge).
 
 
